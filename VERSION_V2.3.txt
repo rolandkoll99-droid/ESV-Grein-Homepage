@@ -1,0 +1,12 @@
+ESV Grein Webseite V2.3 Veröffentlichung (30.10.2026) – Basis: V2.2 Präsentation
+
+Für die Veröffentlichung:
+- Suchmaschinen-Sperre (noindex) auf der Startseite entfernt
+- Vorschau-Band standardmäßig aus
+- Nicht ausgefüllte Platzhalter ([Telefonnummer] usw.) werden nicht mehr angezeigt
+- Vorstand ohne Namen wird ausgeblendet
+- Datenschutzerklärung: Google Tabelle/Drive ergänzt, Stand eingetragen
+- Kleinere Korrekturen: Handy-Menü, Kalender-Barrierefreiheit, Server-Eingabeprüfung
+- Offene Punkte für den Verein: PRUEFBERICHT_V2.3.md, Abschnitt 3
+
+Alles aus V2.2 (Präsentation) und V2.1 (Sicherheit) enthalten.

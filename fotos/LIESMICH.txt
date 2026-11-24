@@ -1,0 +1,12 @@
+FOTOS FÜR DIE WEBSEITE
+======================
+Pro Veranstaltung einen Unterordner anlegen, Datum vorne, z. B.:
+
+  2026-07-17 Mix Rechberg
+  2026-11-14 Bezirksmeisterschaft
+
+Fotos (JPG/PNG) hineinkopieren – fertig. Die Webseite zeigt sie automatisch
+als Album an (Seite neu laden). Reihenfolge = Dateiname.
+
+Tipp: In der Verwaltung (Reiter "Fotos") geht es auch per Mausklick –
+große Handyfotos werden dort automatisch verkleinert.

@@ -1,0 +1,107 @@
+{
+ "verein": {
+  "adresse": "",
+  "plzOrt": "4360 Grein",
+  "telefon": "",
+  "email": "",
+  "mitgliedsbeitrag": "",
+  "trainingszeiten": "",
+  "facebook": "https://www.facebook.com/share/19qc47PZg9/",
+  "wetterOrt": "Grein",
+  "wetterLat": 48.229,
+  "wetterLon": 14.856,
+  "vorschau": false
+ },
+ "neuigkeiten": [
+  {
+   "datum": "2026-10-28",
+   "titel": "Unsere neue Webseite ist online",
+   "text": "Ab sofort findet ihr hier alle Termine, Ergebnisse und Fotos des ESV Grein. Schaut regelmäßig vorbei!",
+   "bild": "",
+   "wichtig": false
+  }
+ ],
+ "termine": [],
+ "ergebnisse": [
+  {
+   "datum": "2026-07-17",
+   "bewerb": "Mix Rechberg 2026",
+   "ort": "Rechberg",
+   "mannschaft": "ÖTSU Grein",
+   "platz": 4,
+   "teilnehmer": 9,
+   "punkte": "8:8",
+   "saison": "Sommer 2026",
+   "pdf": ""
+  },
+  {
+   "datum": "2026-05-02",
+   "bewerb": "Vereinsturnier 2026 – Herrenturnier",
+   "ort": "Perg (ASKÖ Prinz Brunnenbau Perg)",
+   "mannschaft": "Union Grein",
+   "platz": 8,
+   "teilnehmer": null,
+   "punkte": "8:12",
+   "saison": "Sommer 2026",
+   "pdf": ""
+  },
+  {
+   "datum": "2026-04-24",
+   "bewerb": "Frühlingsturnier Dimbach",
+   "ort": "Stockhalle Dimbach",
+   "mannschaft": "Union Grein",
+   "platz": 1,
+   "teilnehmer": 7,
+   "punkte": "10:2",
+   "saison": "Sommer 2026",
+   "pdf": ""
+  }
+ ],
+ "veranstaltungen": [],
+ "regelTraining": [
+  {
+   "wochentag": 1,
+   "zeit": "",
+   "titel": "Seniorentraining",
+   "ort": "Stockbahn Grein"
+  },
+  {
+   "wochentag": 5,
+   "zeit": "18:00",
+   "titel": "Training",
+   "ort": "Stockbahn Grein"
+  }
+ ],
+ "trainingsfrei": [
+  "2026-12-25",
+  "2027-01-01"
+ ],
+ "vorstand": [
+  {
+   "funktion": "Obmann",
+   "name": "",
+   "foto": ""
+  },
+  {
+   "funktion": "Obmann-Stellvertreter",
+   "name": "",
+   "foto": ""
+  },
+  {
+   "funktion": "Kassier",
+   "name": "",
+   "foto": ""
+  },
+  {
+   "funktion": "Schriftführer",
+   "name": "",
+   "foto": ""
+  },
+  {
+   "funktion": "Sportwart",
+   "name": "",
+   "foto": ""
+  }
+ ],
+ "albumTexte": {}
+}
