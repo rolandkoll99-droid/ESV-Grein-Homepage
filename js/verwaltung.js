@@ -617,11 +617,11 @@
     var ergebnis = el("p", { role: "status" });
     ziel.appendChild(el("div", { class: "karte editor", style: "border-color:transparent" }, [
       el("h3", { text: "Für die Online-Webseite exportieren" }),
-      el("p", { class: "leise", text: "Erstellt im Ordner „export“ eine fertige Webseite mit allen Terminen, Ergebnissen und Fotos (auch als ZIP). Diese kann z. B. auf GitHub Pages hochgeladen werden." }),
+      el("p", { class: "leise", text: "Erstellt im Ordner „export“ eine fertige Webseite mit dem aktuellen Stand aller Termine, Ergebnisse und Fotos. Nach jeder Änderung neu exportieren und den Inhalt des Ordners auf GitHub hochladen. Die Webseite zeigt unten „Stand …“ – daran erkennst du, ob die neue Fassung online ist." }),
       el("button", { type: "button", class: "knopf knopf--akzent", text: "Export erstellen", onclick: function () {
         ergebnis.className = "meldung meldung--ok"; ergebnis.textContent = "Wird erstellt …";
         api("api/admin/export", {}).then(function (j) {
-          ergebnis.textContent = "Fertig ✓ " + j.fotos + " Fotos. Ordner: " + j.ordner + " · ZIP: " + j.zip;
+          ergebnis.textContent = "Fertig ✓ Stand " + j.stand + " · " + j.fotos + " Fotos. Jetzt den INHALT dieses Ordners auf GitHub hochladen: " + j.ordner + (j.hinweis ? " – " + j.hinweis : "");
         }).catch(function (e) { ergebnis.className = "meldung meldung--fehler"; ergebnis.textContent = e.message; });
       } }),
       ergebnis
