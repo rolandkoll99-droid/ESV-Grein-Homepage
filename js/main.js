@@ -593,6 +593,7 @@
     if (window.ESVWetter) window.ESVWetter(e.daten.verein);
     // PC-Version: Link zur Verwaltung in der Fußzeile
     if (e.bericht && e.bericht.quelle === "lokal") { $("verwaltung-link").hidden = false; $("verwaltung-oben").hidden = false; }
+    if (e.bericht && e.bericht.quelle === "github") $("verwaltung-link").hidden = false;
     vorschauUndHandy(e.daten);
   });
 })();

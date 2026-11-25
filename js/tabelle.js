@@ -233,7 +233,7 @@
       .then(function (r) { return r.ok ? r.json() : null; })
       .catch(function () { return null; })
       .then(function (j) {
-        if (!j || !j.esvLokal) return ladenOnline();
+        if (!j || !j.esvLokal) return ladenGithub();
         var D = window.ESV || {};
         var verein = D.verein || {};
         Object.keys(j.verein || {}).forEach(function (k) { if (j.verein[k] !== "" && j.verein[k] != null) verein[k] = j.verein[k]; });
@@ -245,6 +245,37 @@
         return { daten: D, bericht: { quelle: "lokal", geladen: {}, fehler: [], warnungen: [], tabelleId: "" } };
       });
   };
+
+  // GitHub Pages: Die Verwaltung speichert in data/daten.json im Repository. Die Datei wird bei jedem
+  // Aufruf frisch geholt (?t=…), damit Änderungen ohne Zwischenspeicher sichtbar werden.
+  function ladenGithub() {
+    return fetch("data/daten.json?t=" + Date.now(), { cache: "no-store" })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .catch(function () { return null; })
+      .then(function (j) {
+        if (!j || typeof j !== "object" || !j.verein) return ladenOnline();
+        var D = window.ESV || {};
+        var verein = D.verein || {};
+        Object.keys(j.verein).forEach(function (k) { if (j.verein[k] !== "" && j.verein[k] != null) verein[k] = j.verein[k]; });
+        verein.googleTabelleId = "";
+        ["neuigkeiten", "termine", "veranstaltungen"].forEach(function (k) {
+          if (Array.isArray(j[k])) j[k] = j[k].filter(function (x) { return !(x && x.entwurf); });
+        });
+        ["neuigkeiten", "termine", "ergebnisse", "veranstaltungen", "regelTraining", "trainingsfrei", "vorstand"].forEach(function (k) {
+          if (Array.isArray(j[k])) D[k] = j[k];
+        });
+        var texte = j.albumTexte || {}, fotos = [];
+        (j.fotoAlben || []).forEach(function (a) {
+          (a.bilder || []).forEach(function (b) {
+            var u = "fotos/" + (a.ordner ? encodeURIComponent(a.ordner) + "/" : "") + encodeURIComponent(b);
+            fotos.push({ datum: a.datum || "", album: a.album || "Allgemein", gross: u, klein: u, text: (texte[a.ordner || ""] || {})[b] || "", albumLink: "" });
+          });
+        });
+        if (j.fotoAlben) D.fotos = fotos;
+        D.verein = verein;
+        return { daten: D, bericht: { quelle: "github", geladen: {}, fehler: [], warnungen: [], tabelleId: "" } };
+      });
+  }
 
   function ladenOnline() {
     var D = window.ESV || {};

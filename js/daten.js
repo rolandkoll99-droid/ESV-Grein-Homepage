@@ -1,4 +1,4 @@
-/* Automatisch erzeugt am 24.11.2026 16:31 */
+/* Automatisch erzeugt am 25.11.2026 07:40 */
 window.ESV = {
  "verein": {
   "adresse": "Greinburgstraße 14",
@@ -16,7 +16,7 @@ window.ESV = {
  },
  "regelWochen": 4,
  "fotos": [],
- "exportStand": "24.11.2026 16:31",
+ "exportStand": "25.11.2026 07:40",
  "neuigkeiten": [
   {
    "datum": "2026-10-28",

@@ -429,7 +429,8 @@
     var kopf = el("div", { class: "bereich-kopf" }, [el("h2", { text: "Fotos" }),
       STATUS.ordnerOeffnen ? el("button", { type: "button", class: "knopf knopf--hell", text: "Fotoordner öffnen", onclick: function () { api("api/admin/ordner-oeffnen", {}); } }) : null]);
     ziel.appendChild(kopf);
-    ziel.appendChild(el("p", { class: "bereich-hinweis", text: "Ein Album pro Veranstaltung. Fotos hier hochladen ODER direkt in den Ordner „fotos“ auf dem Daten-Stick kopieren (ein Unterordner pro Veranstaltung, z. B. „2026-07-17 Mix Rechberg“). Große Handyfotos werden beim Hochladen automatisch verkleinert." }));
+    if (GH) ziel.appendChild(el("p", { class: "bereich-hinweis", text: "Ein Album pro Veranstaltung. Große Handyfotos werden beim Hochladen automatisch verkleinert. Auf der Webseite erscheinen neue Fotos nach 1–2 Minuten." }));
+    else ziel.appendChild(el("p", { class: "bereich-hinweis", text: "Ein Album pro Veranstaltung. Fotos hier hochladen ODER direkt in den Ordner „fotos“ auf dem Daten-Stick kopieren (ein Unterordner pro Veranstaltung, z. B. „2026-07-17 Mix Rechberg“). Große Handyfotos werden beim Hochladen automatisch verkleinert." }));
 
     var name = el("input", { id: "album-name", type: "text", placeholder: "z. B. Bezirksmeisterschaft" });
     var datum = el("input", { id: "album-datum", type: "date" }); datum.value = heuteISO();
@@ -466,7 +467,7 @@
         var weg = el("button", { type: "button", class: "mini mini--weg", text: "Album löschen" });
         weg.addEventListener("click", function () {
           if (!weg.classList.contains("sicher")) { weg.classList.add("sicher"); weg.textContent = "Wirklich löschen?"; setTimeout(function () { weg.classList.remove("sicher"); weg.textContent = "Album löschen"; }, 4000); return; }
-          api("api/admin/foto-loeschen", { ordner: a.ordner, datei: "" }).then(function () { toast("Album in den Papierkorb verschoben"); zeigeFotos(ziel); });
+          api("api/admin/foto-loeschen", { ordner: a.ordner, datei: "" }).then(function () { toast(GH ? "Album gelöscht" : "Album in den Papierkorb verschoben"); zeigeFotos(ziel); });
         });
         box.appendChild(el("div", { class: "album-box__kopf" }, [
           el("div", null, [el("h3", { text: a.album }), el("span", { class: "leise", text: (a.datum ? datumDE(a.datum) + " · " : "") + a.bilder.length + " Fotos" })]),
@@ -489,7 +490,7 @@
           var x = el("button", { type: "button", class: "weg", "aria-label": "Foto löschen", text: "×" });
           x.addEventListener("click", function () {
             if (!x.dataset.sicher) { x.dataset.sicher = "1"; x.textContent = "?"; setTimeout(function () { delete x.dataset.sicher; x.textContent = "×"; }, 3000); return; }
-            api("api/admin/foto-loeschen", { ordner: a.ordner, datei: b }).then(function () { fig.remove(); toast("Foto in den Papierkorb verschoben"); });
+            api("api/admin/foto-loeschen", { ordner: a.ordner, datei: b }).then(function () { fig.remove(); toast(GH ? "Foto gelöscht" : "Foto in den Papierkorb verschoben"); });
           });
           var fig = el("figure", null, [el("img", { src: url, alt: "", loading: "lazy" }), x, text]);
           daumen.appendChild(fig);
@@ -593,15 +594,25 @@
     ziel.appendChild(el("div", { class: "karte editor", style: "border-color:transparent" }, [
       el("h3", { text: "Präsentation" }),
       el("label", { class: "schalter", style: "font-size:16px;color:var(--blau)" }, [vs, "Hinweis „Vorschau – noch nicht veröffentlicht“ oben auf der Webseite zeigen"]),
-      el("p", { class: "leise", style: "margin-top:14px", text: "Beispieldaten füllen die Webseite für die Vorführung mit ein paar Neuigkeiten, Terminen und einer Veranstaltung. Sie sind als „Beispiel“ gekennzeichnet und lassen sich mit einem Klick wieder entfernen – eigene Einträge bleiben unberührt." }),
-      bsInfo,
-      el("div", { class: "editor__knoepfe" }, [
+      GH ? null : el("p", { class: "leise", style: "margin-top:14px", text: "Beispieldaten füllen die Webseite für die Vorführung mit ein paar Neuigkeiten, Terminen und einer Veranstaltung. Sie sind als „Beispiel“ gekennzeichnet und lassen sich mit einem Klick wieder entfernen – eigene Einträge bleiben unberührt." }),
+      GH ? null : bsInfo,
+      GH ? null : el("div", { class: "editor__knoepfe" }, [
         el("button", { type: "button", class: "knopf knopf--akzent", text: "Beispieldaten laden", onclick: function () { beispiel("beispiel-laden"); } }),
         el("button", { type: "button", class: "knopf knopf--hell", text: "Beispieldaten entfernen", onclick: function () { beispiel("beispiel-entfernen"); } })
       ])
     ]));
 
-    ziel.appendChild(passwortFormular("Passwort ändern", "Das Passwort gilt für alle, die die Webseite pflegen. Bei Wechsel im Vorstand bitte ändern und neu weitergeben.", function () { toast("Passwort geändert ✓"); }));
+    if (GH) ziel.appendChild(el("div", { class: "karte editor", style: "border-color:transparent" }, [
+      el("h3", { text: "Zugang über GitHub" }),
+      el("p", { class: "leise", text: "Jede Person meldet sich mit ihrem eigenen GitHub-Schlüssel an. Gespeicherte Änderungen sind nach 1–2 Minuten auf der Webseite sichtbar. Jede Änderung steht im Änderungsprotokoll und lässt sich auf GitHub wiederherstellen." }),
+      el("div", { class: "editor__knoepfe" }, [
+        el("button", { type: "button", class: "knopf knopf--hell", text: "Schlüssel auf diesem Gerät löschen und abmelden", onclick: function () {
+          try { localStorage.removeItem("esvGithubSchluessel"); } catch (e) { /* egal */ }
+          abmelden("Schlüssel gelöscht. Zum nächsten Anmelden wird er wieder benötigt.");
+        } })
+      ])
+    ]));
+    if (!GH) ziel.appendChild(passwortFormular("Passwort ändern", "Das Passwort gilt für alle, die die Webseite pflegen. Bei Wechsel im Vorstand bitte ändern und neu weitergeben.", function () { toast("Passwort geändert ✓"); }));
 
     var prot = el("div", { class: "karte editor", style: "border-color:transparent" }, [el("h3", { text: "Änderungsprotokoll" }),
       el("p", { class: "leise", text: "Wer hat wann was geändert (die letzten 30 Einträge)." })]);
@@ -615,7 +626,7 @@
     }).catch(function () { protListe.textContent = ""; });
 
     var ergebnis = el("p", { role: "status" });
-    ziel.appendChild(el("div", { class: "karte editor", style: "border-color:transparent" }, [
+    if (!GH) ziel.appendChild(el("div", { class: "karte editor", style: "border-color:transparent" }, [
       el("h3", { text: "Für die Online-Webseite exportieren" }),
       el("p", { class: "leise", text: "Erstellt im Ordner „export“ eine fertige Webseite mit dem aktuellen Stand aller Termine, Ergebnisse und Fotos. Nach jeder Änderung neu exportieren und den Inhalt des Ordners auf GitHub hochladen. Die Webseite zeigt unten „Stand …“ – daran erkennst du, ob die neue Fassung online ist." }),
       el("button", { type: "button", class: "knopf knopf--akzent", text: "Export erstellen", onclick: function () {
@@ -627,7 +638,7 @@
       ergebnis
     ]));
 
-    ziel.appendChild(el("div", { class: "karte editor", style: "border-color:transparent" }, [
+    if (!GH) ziel.appendChild(el("div", { class: "karte editor", style: "border-color:transparent" }, [
       el("h3", { text: "Sicherungen" }),
       el("p", { class: "leise", text: "Bei jedem Speichern wird automatisch eine Sicherung angelegt (Ordner data/sicherung auf dem Stick, die letzten 50). Auf dem Raspberry Pi liegt zusätzlich täglich eine Kopie auf der SD-Karte. Gelöschte Fotos landen im Ordner fotos/_papierkorb. Den Stick regelmäßig (z. B. monatlich) auf einen PC kopieren." })
     ]));
@@ -786,6 +797,7 @@
   }
 
   var STATUS = {};
+  var GH = !!window.ESV_GITHUB_AKTIV; // Verwaltung läuft auf GitHub Pages (js/github-verwaltung.js)
   function datenLaden() {
     var st = api("api/admin/status").then(function (s) { STATUS = s; }).catch(function () { /* egal */ });
     return Promise.all([st, api("api/admin/daten")]).then(function (r) {
