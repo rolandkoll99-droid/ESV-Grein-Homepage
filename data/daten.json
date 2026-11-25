@@ -118,6 +118,13 @@
    "text": "",
    "ausschreibung": "",
    "entwurf": false
+  },
+  {
+   "datum": "2026-12-25",
+   "titel": "Altjahres Schiessen",
+   "text": "Vereinsturnier - alle können Mitmachen",
+   "ausschreibung": "",
+   "entwurf": false
   }
  ],
  "regelTraining": [
@@ -166,6 +173,6 @@
   }
  ],
  "albumTexte": {},
- "_rev": 14,
+ "_rev": 15,
  "fotoAlben": []
 }
