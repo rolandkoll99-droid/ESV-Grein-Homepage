@@ -37,6 +37,14 @@
    "ort": "ESV Grein",
    "art": "fest",
    "entwurf": false
+  },
+  {
+   "datum": "2026-12-04",
+   "zeit": "18:30",
+   "titel": "Krampusturnier",
+   "ort": "",
+   "art": "turnier",
+   "entwurf": false
   }
  ],
  "ergebnisse": [
@@ -158,6 +166,6 @@
   }
  ],
  "albumTexte": {},
- "_rev": 13,
+ "_rev": 14,
  "fotoAlben": []
 }
